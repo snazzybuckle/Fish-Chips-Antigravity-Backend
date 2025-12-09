@@ -3,14 +3,15 @@ const router = express.Router();
 const db = require('../db');
 const jwt = require('jsonwebtoken');
 
-// Middleware to verify token
+// Middleware to verify token (from cookies)
 const verifyToken = (req, res, next) => {
-    const token = req.headers['authorization']; // Expected format: "Bearer <token>"
-    if (!token) return res.status(403).json({ error: 'No token provided' });
+    const token = req.cookies.token; // Read from HttpOnly cookie
+    if (!token) {
+        return res.status(401).json({ error: 'No token provided' });
+    }
 
     try {
-        const bearer = token.split(' ')[1];
-        const decoded = jwt.verify(bearer, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.user = decoded; // { id, username }
         next();
     } catch (err) {
