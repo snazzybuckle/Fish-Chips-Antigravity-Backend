@@ -7,10 +7,12 @@ const db = require('../db');
 // Register
 router.post('/register', async (req, res) => {
     try {
-        const { username, password } = req.body;
+        let { username, password } = req.body;
         if (!username || !password) {
             return res.status(400).json({ error: 'Username and password required' });
         }
+        username = username.trim();
+        password = password.trim();
 
         // Check if user exists
         const [rows] = await db.query('SELECT * FROM users WHERE username = ?', [username]);
