@@ -48,7 +48,7 @@ backend/
 3. Configure Environment Variables:
    Create a `.env` file in the `backend` folder with the following contents (adjust as needed):
    ```env
-   PORT=3000
+   PORT=10000
    DB_HOST=localhost
    DB_USER=root
    DB_PASSWORD=your_password

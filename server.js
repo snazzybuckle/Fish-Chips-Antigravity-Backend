@@ -10,7 +10,7 @@ const rateLimit = require('express-rate-limit');
 const cookieParser = require('cookie-parser');
 
 // Env fallback for port or default to 3000
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 // We don't strictly need JWT_SECRET in env if we hardcode for "pipeline" ease
 // But good practice to at least check
 process.env.JWT_SECRET = process.env.JWT_SECRET || 'pipeline_secret_key_12345';
