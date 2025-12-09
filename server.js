@@ -37,9 +37,11 @@ app.use(limiter);
 
 // Middleware
 const allowedOrigins = [
-    'http://localhost:3000', 
-    process.env.FRONTEND_URL // Add production URL here via Env Var
-];
+    'http://localhost:3000',
+    'http://localhost:10000',
+    'http://localhost:5500', // Live Server
+    process.env.FRONTEND_URL // Add production frontend URL here via Env Var
+].filter(Boolean); // Filter out undefined
 
 app.use(cors({
     origin: function (origin, callback) {
