@@ -3,7 +3,7 @@ const mysql = require('mysql2/promise');
 // CONFIGURATION
 // Replace '...' with your actual pipeline/production connection string if available via ENV
 // or hardcode it here if you prefer to commit it directly (be careful with secrets in public repos).
-const DATABASE_URL = process.env.DATABASE_URL || 'mysql://root:7M(N.+%v&)uBQY*@34.13.32.99:3306/secure_login_website';
+const DATABASE_URL = process.env.DATABASE_URL || 'mysql://root:7M(N.%2B%25v%26)uBQY*@34.13.32.99:3306/fish_chips_db';
 
 const pool = mysql.createPool({
     uri: DATABASE_URL,
