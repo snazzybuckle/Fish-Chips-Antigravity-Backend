@@ -65,7 +65,7 @@ router.post('/login', async (req, res) => {
         res.cookie('token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production', // Must be true for sameSite: 'none'
-            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict', // 'none' for cross-origin in prod
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // 'lax' is better for local dev
             maxAge: 15 * 60 * 1000 // 15 mins
         });
 
@@ -100,7 +100,7 @@ router.post('/logout', (req, res) => {
     res.clearCookie('token', {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict' // Must match login cookie settings!
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax' // Must match login cookie settings!
     });
     res.json({ message: 'Logged out successfully' });
 });
