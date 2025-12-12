@@ -40,6 +40,11 @@ const allowedOrigins = [
     'http://localhost:3000',
     'http://localhost:10000',
     'http://localhost:5500', // Live Server
+    'http://localhost:3000', // VS Code Live Preview
+    'http://127.0.0.1:3000', // VS Code Live Preview IP
+    'http://127.0.0.1:5500', // Live Server IP
+    'http://127.0.0.1:3030', // Alternative IP
+    'http://127.0.0.1:8080', // http-server IP
     process.env.FRONTEND_URL // Add production frontend URL here via Env Var
 ].filter(Boolean); // Filter out undefined
 

@@ -62,12 +62,15 @@ router.post('/login', async (req, res) => {
         });
 
         // Set HttpOnly Cookie
-        res.cookie('token', token, {
+        const cookieOptions = {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production', // Must be true for sameSite: 'none'
             sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // 'lax' is better for local dev
-            maxAge: 15 * 60 * 1000 // 15 mins
-        });
+            maxAge: 15 * 60 * 1000, // 15 mins
+            path: '/' // Explicitly set path to root
+        };
+        console.log('Login success. Setting cookie:', cookieOptions);
+        res.cookie('token', token, cookieOptions);
 
         res.json({ message: 'Login successful', username: user.username });
     } catch (err) {
@@ -78,16 +81,16 @@ router.post('/login', async (req, res) => {
 
 // Check Auth Status (replacing checkAuth)
 router.get('/me', (req, res) => {
-    console.log('GET /me - Cookies:', req.cookies);
+    // console.log('GET /me - Cookies:', req.cookies); // Too noisy?
     const token = req.cookies.token;
     if (!token) {
-        console.log('GET /me - No token');
+        // console.log('GET /me - No token');
         return res.status(401).json({ authenticated: false });
     }
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        console.log('GET /me - success', decoded.username);
+        // console.log('GET /me - success', decoded.username);
         res.json({ authenticated: true, username: decoded.username, userId: decoded.id });
     } catch (err) {
         console.error('GET /me - verify failed', err.message);
@@ -100,7 +103,8 @@ router.post('/logout', (req, res) => {
     res.clearCookie('token', {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax' // Must match login cookie settings!
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Must match login cookie settings!
+        path: '/'
     });
     res.json({ message: 'Logged out successfully' });
 });
